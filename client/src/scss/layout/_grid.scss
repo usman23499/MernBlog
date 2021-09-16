@@ -1,0 +1,19 @@
+.row {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+// grid list
+@for $i from 1 through 12 {
+	.col-#{$i} {
+		width: 100% / 12 * $i;
+		// is se har colum ke hase se jaga creta like 12 full screnn and 8+col4 tu cover 12 ye is ka formula hai
+		
+		@include responsive(mobile) {
+			width: 100%;
+		}
+		@include responsive(tablet) {
+			width: 100%;
+		}
+}
+}

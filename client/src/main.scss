@@ -1,11 +1,20 @@
+// import variable
+
+@import 'scss/abstracts/variables';
+@import 'scss/abstracts/mixin';
+
 @import 'scss/base/reset';
 
 // import scss utils
-@import 'scss/utils/_utils';
+@import 'scss/utils/utils';
 
-// import variable
 
-@import 'scss/abstracts/_variables';
 
 // import scss components
-@import 'scss/components/_navbar';
+@import 'scss/components/navbar';
+@import 'scss/components/bgImage';
+@import 'scss/components/account';
+
+// import scss layout
+@import 'scss/layout/grid';
+
