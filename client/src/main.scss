@@ -1,1 +1,11 @@
-@import 'sccs/base/reset';
+@import 'scss/base/reset';
+
+// import scss utils
+@import 'scss/utils/_utils';
+
+// import variable
+
+@import 'scss/abstracts/_variables';
+
+// import scss components
+@import 'scss/components/_navbar';
