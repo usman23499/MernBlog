@@ -31,9 +31,9 @@ const Register = (props) => {
 		if (registerErrors.length > 0) {
 			registerErrors.map((error) => toast.error(error.msg));
 		}
-		if(user){
-			props.history.push('/dashbord');
-		}
+		// if(user){
+		// 	props.history.push('/dashbord');
+		// }// after set route no need of this
 	}, [registerErrors,user]); // ye only chale ga jab change in register Errror main change us ke hasab se error show
 	return (
 		<>
