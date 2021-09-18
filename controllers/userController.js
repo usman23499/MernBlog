@@ -53,7 +53,7 @@ module.exports.register=async (req,res)=>{
         const checkUser=await User.findOne({email});// check email phele se tu registed nahi hai 
         // sarif email is lea ke schema and uper donon jaga email tha waran email:email
         if(checkUser){
-            return res.status(400).json({error: [{msg:"Email is already taken"}]})
+            return res.status(400).json({errors: [{msg:"Email is already taken"}]})
         }
         // before save in database hash and salt the password
 
