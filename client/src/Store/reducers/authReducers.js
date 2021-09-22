@@ -10,7 +10,7 @@ import {SET_LOADER,
 const initState={
     loading:false,
     registerErrors:[],
-    loadingErrors:[],
+    loginErrors: [],
     token: "",
     user: ""
 };
@@ -54,8 +54,18 @@ const AuthReducers=(state=initState,actions)=>{
 
         const decode= verifyToken(actions.payload);
         const {user} = decode;
-        return {...state,token:actions.payload,user:user}
+        return {...state,token:actions.payload,user:user,loginErrors: [],
+			registerErrors: []}
     }
+    else if(actions.type===LOGOUT){
+        return {...state,token:"",user:""}
+    }
+    else if (actions.type === LOGIN_ERRORS) {
+		return {
+			...state,
+			loginErrors: actions.payload,
+		};
+	}
     else{
         return state;
     }

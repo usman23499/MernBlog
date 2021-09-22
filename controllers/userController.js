@@ -99,8 +99,8 @@ module.exports.loginValidations=[
     // add vlidation rule
     // trim use to remove spaces
 
-    body("password").not().isEmpty().trim().withMessage("Name is requied"),
-    body("email").not().isEmpty().trim().withMessage("Name is requied"),
+    body("password").not().isEmpty().trim().withMessage("password is requied"),
+    body("email").not().isEmpty().trim().withMessage("email is requied"),
 
 ]
 
@@ -132,12 +132,12 @@ module.exports.login=async (req,res)=>{
                 return res.status(200).json({msg:"Your have login sucessfully",token});
            }
            else{
-            return res.status(401).json({msg:"Password not match"});
+            return res.status(401).json({errors: [{msg:"password not match"}]});
             // 401 mean unauthorize users
            }
         }
         else{
-            return res.status(404).json({msg:"Email not found"});
+            return res.status(404).json({errors: [{msg:"Email is not found"}]});
         }
 
       

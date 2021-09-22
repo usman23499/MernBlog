@@ -1,22 +1,44 @@
 .container {
 	width: 1200px;
 	margin: 0 auto;
-
 	@include responsive(mobile){
+	  width: 100%;
+	  padding: 0 2rem;
+	}
+	@include responsive(tablet) {
 		width: 100%;
-		padding: 0 2rem;
-	  }
-	  @include responsive(tablet) {
-		  width: 100%;
-		padding: 0 2rem;
-	  }
-	  @include responsive(laptop) {
-		  width: 100%;
-		padding: 0 2rem;
-	  }
+	  padding: 0 2rem;
+	}
+	@include responsive(laptop) {
+		width: 100%;
+	  padding: 0 2rem;
+	}
 }
 .mt-80 {
 	margin-top: 8rem;
+}
+.mt-100 {
+	margin-top: 10rem;
+}
+.p-15 {
+	padding: 1.5rem;
+}
+.ml-minus-15 {
+	margin-left: -1.5rem;
+}
+.mr-minus-15 {
+	margin-left: -1.5rem;
+}
+.imagePreivew {
+	width: 100%;
+	height: auto;
+	img {
+		width: 100%;
+		height: auto;
+	}
+}
+.length {
+	font-size: 1.5rem;
 }
 .group {
 	margin-bottom: 1.3rem;
@@ -24,7 +46,7 @@
 		width: 100%;
 		padding: 1.5rem;
 		border: none;
-		background: #efefef;
+		background: $silver;
 		outline: none;
 		border-bottom: 2px solid transparent;
 		transition: all 0.5s;
@@ -37,7 +59,7 @@
 .btn {
 	text-decoration: none;
 	outline: none;
-	color: #fff;
+	color: $white;
 	height: 4rem;
 	padding: 1.2rem 1rem;
 	text-transform: uppercase;
@@ -47,7 +69,7 @@
 	cursor: pointer;
 }
 .btn-default {
-	background: green;
+	background: $green;
 }
 .btn-block {
 	width: 100%;
@@ -56,4 +78,38 @@
 .form-heading {
 	font-size: 2rem;
 	font-weight: 400;
+}
+.card {
+	background: $white;
+	padding: 1.5rem;
+	&__h3 {
+		font-size: 1.6rem;
+		font-weight: 400;
+		margin-bottom: 2rem;
+	}
+}
+label {
+	display: block;
+	font-size: 1.3rem;
+	margin-bottom: .4rem;
+}
+#image {
+	display: none;
+}
+.image__label {
+	display: block;
+	width: 100%;
+	padding: 1.5rem;
+	background: #b2bec3;
+	color: $white;
+	cursor: pointer;
+}
+a {
+	text-decoration: none;
+	color: $black;
+}
+.icon {
+	font-size: 2rem;
+	margin-left: 1.5rem;
+	cursor: pointer;
 }

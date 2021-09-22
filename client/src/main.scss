@@ -2,18 +2,20 @@
 
 @import 'scss/abstracts/variables';
 @import 'scss/abstracts/mixin';
+@import 'scss/abstracts/extends';
 
-@import 'scss/base/reset';
+
 
 // import scss utils
 @import 'scss/utils/utils';
 
-
+@import 'scss/base/reset';
 
 // import scss components
 @import 'scss/components/navbar';
 @import 'scss/components/bgImage';
 @import 'scss/components/account';
+@import 'scss/components/notFound';
 
 // import scss layout
 @import 'scss/layout/grid';
