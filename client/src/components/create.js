@@ -4,24 +4,20 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { createAction } from '../Store/asyncMethods/PostMethods';
-const Create = () => {
+import toast, { Toaster } from 'react-hot-toast';
 
+const Create = (props) => {
+	const { createErrors, redirect } = useSelector(
+		(state) => state.PostReducers
+	);
 	const [currentImage, setCurrentImage] = useState('Choose image');
-	const [value, setValue] = useState('');
-    const [imagePreview, setImagePreview] = useState('');
+	const [imagePreview, setImagePreview] = useState('');
+	const dispatch = useDispatch();
 	const {
 		user: { _id, name },
 	} = useSelector((state) => state.AuthReducers);
-   
-	const [state, setState] = useState({
-		title: '',
-        description: '',
-		image: '',
-	
-	});
-    const fileHandle=(e)=>{
-        // setCurrentImage(e.target.files[0].name); // console karke check is main file ka name hai   
-        if (e.target.files.length !== 0) {
+	const fileHandle = (e) => {
+		if (e.target.files.length !== 0) { // this is for check image slect ke hai ke nahi
 			setCurrentImage(e.target.files[0].name);
 			setState({
 				...state,
@@ -32,8 +28,29 @@ const Create = () => {
 				setImagePreview(reader.result);
 			};
 			reader.readAsDataURL(e.target.files[0]);
-		} 
-    }
+		}
+	};
+	const [state, setState] = useState({
+		title: '',
+		description: '',
+		image: '',
+	});
+	const handleDescription = (e) => {
+		setState({
+			...state,
+			[e.target.name]: e.target.value,
+		});
+	};
+	const [slug, setSlug] = useState('');
+	const [slugButton, setSlugButton] = useState(false);
+	const slugHandle = (e) => {
+		setSlugButton(true);
+		setSlug(e.target.value);
+	};
+	const handleURL = (e) => {
+		e.preventDefault();
+		setSlug(slug.trim().split(' ').join('-'));
+	};
 	const handleInput = (e) => {
 		setState({
 			...state,
@@ -42,25 +59,7 @@ const Create = () => {
 		const createSlug = e.target.value.trim().split(' ').join('-');
 		setSlug(createSlug);
 	};
-	const handleDescription = (e) => {
-		setState({
-			...state,
-			[e.target.name]: e.target.value,
-            
-		});
-	};
-	const [slug, setSlug] = useState('');
-	const [slugButton, setSlugButton] = useState(false);
-	const slugHandle = (e) => {
-		setSlugButton(true);
-		setSlug(e.target.value);
-       
-	};
-	const handleURL = (e) => {
-		e.preventDefault();
-		setSlug(slug.trim().split(' ').join('-'));
-	};
-	const dispatch = useDispatch();
+	const [value, setValue] = useState('');
 	const createPost = (e) => {
 		e.preventDefault();
 		const { title, description, image } = state;
@@ -74,17 +73,34 @@ const Create = () => {
 		formData.append('id', _id);
 		dispatch(createAction(formData));
 	};
+	useEffect(() => {
+		if (redirect) {
+			props.history.push('/dashbord');
+		}
+		if (createErrors.length !== 0) {
+			createErrors.map((err) => toast.error(err.msg));
+		}
+	}, [createErrors, redirect]);
+
 	return (
 		<div className='create mt-100'>
 			<Helmet>
 				<title>Create new post</title>
 				<meta name='description' content='Create a new post' />
 			</Helmet>
-			
+			<Toaster
+				position='top-right'
+				reverseOrder={false}
+				toastOptions={{
+					style: {
+						fontSize: '14px',
+					},
+				}}
+			/>
 
 		
 				<div className='container'>
-					<form onSubmit={createPost} >
+					<form onSubmit={createPost}>
 						<div className='row ml-minus-15 mr-minus-15'>
 							<div className='col-6 p-15'>
 								<div className='card'>
@@ -114,7 +130,7 @@ const Create = () => {
 										/>
 									</div>
 									<div className='group'>
-										<label htmlFor='body'>Post body  </label>
+										<label htmlFor='body'>Post body</label>
 										<ReactQuill
 											theme='snow'
 											id='body'
@@ -122,7 +138,6 @@ const Create = () => {
 											value={value}
 											onChange={setValue}
 										/>
-                                      
 									</div>
 									<div className='group'>
 										<label htmlFor='description'>Meta Description</label>
@@ -140,10 +155,9 @@ const Create = () => {
 											{state.description ? state.description.length : 0}
 										</p>
 									</div>
-									
 								</div>
 							</div>
-                            <div className='col-6 p-15'>
+							<div className='col-6 p-15'>
 								<div className='card'>
 									<div className='group'>
 										<label htmlFor='slug'>Post URL</label>
@@ -179,13 +193,11 @@ const Create = () => {
 											className='btn btn-default btn-block'
 										/>
 									</div>
-
 								</div>
 							</div>
 						</div>
 					</form>
 				</div>
-			
 		</div>
 	);
 };
