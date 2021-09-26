@@ -8,11 +8,14 @@ import {
 	REMOVE_ERRORS,
 	
 } from '../Types/PostTypes';
-const token = localStorage.getItem("myToken");
+// const token = localStorage.getItem("myToken");
 
 export const createAction = (postData) => {
-	return async (dispatch) => {
-		
+	return async (dispatch,getState) => {
+		// console.log(getState);
+		const {
+			AuthReducers: { token }, // auth reducer se destructure token
+		} = getState();
 		dispatch({ type: SET_LOADER });
 		try {
 			const config = {
