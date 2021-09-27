@@ -4,9 +4,20 @@ import { Helmet } from 'react-helmet';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import {REDIRECT_FALSE,REMOVE_MESSAGE} from '../Store/Types/PostTypes';
-
+import { fetchPost } from '../Store/asyncMethods/PostMethods';
+import { BsPencil, BsArchive } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
+import Loader from './Loader';
+import Slidebar from './Slidebar';
 const Dashbord=()=> {
-    const {redirect,message} = useSelector((state)=>state.PostReducers)
+    const {redirect,message,loading} = useSelector((state)=>state.PostReducers);
+    const {
+      user: { _id },
+     
+    } = useSelector((state) => state.AuthReducers);
+    const { posts } = useSelector((state) => state.FetchPost);
+    console.log(posts);
+
     const dispatch = useDispatch();
     useEffect(()=>{
       if(redirect){
@@ -16,6 +27,7 @@ const Dashbord=()=> {
         toast.success(message);
         dispatch({type:REMOVE_MESSAGE});
       }
+      dispatch(fetchPost(_id));
     },[]);
     return (
       <>
@@ -33,10 +45,41 @@ const Dashbord=()=> {
 					},
 				}}
 			/>
-      <div >
-        
-        <h1>Dashbord</h1>
-      </div>
+     	<div className='container mt-100'>
+				<div className='row ml-minus-15 mr-minus-15'>
+					<div className='col-3 p-15'>
+						<Slidebar />
+					</div>
+					<div className='col-9 p-15'>
+						{!loading ? (
+							posts.length > 0 ? (
+								posts.map((post) => (
+									<div className='dashboard__posts' key={post._id}>
+										<div className='dashboard__posts__title'>
+											<Link to={`/details/${post.slug}`}>{post.title}</Link>
+											
+										</div>
+										<div className='dashboard__posts__links'>
+											<Link to='/'>
+												<BsPencil className='icon' />
+											</Link>
+											<Link to={`/`}>
+												<BsArchive className='icon' />
+											</Link>
+										
+										</div>
+									</div>
+								))
+							) : (
+								'You dont have any post'
+							)
+						) : (
+							<Loader />
+						)}
+						
+					</div>
+				</div>
+			</div>
       </>
     );
   }

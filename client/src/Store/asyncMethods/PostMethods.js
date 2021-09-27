@@ -6,6 +6,7 @@ import {
 	CLOSE_LOADER,
 	REDIRECT_TRUE,
 	REMOVE_ERRORS,
+	SET_POST
 	
 } from '../Types/PostTypes';
 // const token = localStorage.getItem("myToken");
@@ -41,6 +42,32 @@ export const createAction = (postData) => {
 			const { errors } = error.response.data;
 			dispatch({ type: CLOSE_LOADER });
 			dispatch({ type: CREATE_ERRORS, payload: errors });
+		}
+	};
+};
+
+export const fetchPost = (id) => {
+	return async (dispatch, getState) => {
+		const {
+			AuthReducers: { token },
+		} = getState();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		dispatch({ type: SET_LOADER });
+		try {
+			const {
+				data: { response },
+			} = await axios.get(`/post/${id}`, config);
+			// console.log(response);
+			dispatch({ type: CLOSE_LOADER });
+			dispatch({ type: SET_POST, payload: response });
+			
+		} catch (error) {
+			dispatch({ type: CLOSE_LOADER });
+			console.log(error.message);
 		}
 	};
 };

@@ -6,6 +6,7 @@ import {
 	REDIRECT_TRUE,
 	REMOVE_ERRORS,
 	REDIRECT_FALSE,
+	SET_POST,
 	
 } from '../Types/PostTypes';
 
@@ -14,6 +15,7 @@ const initState = {
 	createErrors: [],
 	redirect:false,
 	message:'',
+	posts:[]
 
 	
 };
@@ -41,6 +43,16 @@ export const PostReducers = (state = initState, action) => {
 
 
 	 else {
+		return state;
+	}
+};
+
+export const FetchPost = (state = initState, action) => {
+	const { type, payload } = action;
+	
+	if (type === SET_POST) {
+		return { ...state, posts: payload };
+	} else {
 		return state;
 	}
 };
