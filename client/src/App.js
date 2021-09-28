@@ -11,6 +11,7 @@ import Navbar from './components/Navbar';
 import { Provider } from 'react-redux';
 import  Store  from './Store';
 import Create from './components/create';
+import Edit from './components/Edit';
 function App() {
 
   return (
@@ -24,6 +25,8 @@ function App() {
         <RouteLinks path="/registration" exact  component={Registration} />
         <RouteLinks path="/login" exact component={Login} />
         <PrivateRoute path="/dashbord/:page?" exact component={Dashbord} />
+        <PrivateRoute path='/edit/:id' exact component={Edit} />
+
         <PrivateRoute path="/create" exact component={Create} />
         <Route component={NotFound} /> 
         {/* end main is lea take jab koe route not match tu ye chale */}

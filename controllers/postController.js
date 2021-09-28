@@ -76,7 +76,7 @@ module.exports.createPost=(req,res)=>{
     })
 };
 
-module.exports.fetchPost = async (req, res) => {
+module.exports.fetchPosts = async (req, res) => {
 	const id = req.params.id;
     const page= req.params.page;
     const perPage=3; // 3 items per page
@@ -97,3 +97,14 @@ module.exports.fetchPost = async (req, res) => {
 		return res.status(500).json({ errors: error, msg: error.message });
 	}
 };
+
+module.exports.fetchPost=async(req,res)=>{
+    const id=req.params.id;
+    try {
+        const post= await Post.findOne({_id:id});
+        return res.status(200).json({post}); // in this post all data send to client
+    } catch (error) {
+		return res.status(500).json({ errors: error, msg: error.message });
+        
+    }
+}

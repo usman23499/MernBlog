@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import {REDIRECT_FALSE,REMOVE_MESSAGE} from '../Store/Types/PostTypes';
-import { fetchPost } from '../Store/asyncMethods/PostMethods';
+import { fetchPosts } from '../Store/asyncMethods/PostMethods';
 import { BsPencil, BsArchive } from 'react-icons/bs';
 import { Link,useParams } from 'react-router-dom';
 import Loader from './Loader';
@@ -17,7 +17,7 @@ const Dashbord=()=> {
       user: { _id },
      
     } = useSelector((state) => state.AuthReducers);
-    const { posts,count,perPage } = useSelector((state) => state.FetchPost);
+    const { posts,count,perPage } = useSelector((state) => state.FetchPosts);
 	let { page } = useParams();
 	if (page === undefined) {
 		page = 1;
@@ -33,7 +33,7 @@ const Dashbord=()=> {
         toast.success(message);
         dispatch({type:REMOVE_MESSAGE});
       }
-      dispatch(fetchPost(_id,page));
+      dispatch(fetchPosts(_id,page));
     },[page]);
     return (
       <>
@@ -66,7 +66,7 @@ const Dashbord=()=> {
 											
 										</div>
 										<div className='dashboard__posts__links'>
-											<Link to='/'>
+											<Link to={`/edit/${post._id}`}>
 												<BsPencil className='icon' />
 											</Link>
 											<Link to={`/`}>

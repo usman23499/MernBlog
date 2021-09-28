@@ -6,7 +6,10 @@ import {
 	CLOSE_LOADER,
 	REDIRECT_TRUE,
 	REMOVE_ERRORS,
-	SET_POST
+	SET_POST,
+	SET_POSTS,
+	POST_REQUEST,
+
 	
 } from '../Types/PostTypes';
 // const token = localStorage.getItem("myToken");
@@ -46,7 +49,7 @@ export const createAction = (postData) => {
 	};
 };
 
-export const fetchPost = (id,page) => {
+export const fetchPosts = (id,page) => {
 	return async (dispatch, getState) => {
 		const {
 			AuthReducers: { token },
@@ -60,11 +63,37 @@ export const fetchPost = (id,page) => {
 		try {
 			const {
 				data: { response, count, perPage },
-			} = await axios.get(`/post/${id}/${page}`, config);
+			} = await axios.get(`/posts/${id}/${page}`, config);
 			// console.log(response);
 			dispatch({ type: CLOSE_LOADER });
-			dispatch({ type: SET_POST, payload: {response, count, perPage } });
+			dispatch({ type: SET_POSTS, payload: {response, count, perPage } });
 			
+		} catch (error) {
+			dispatch({ type: CLOSE_LOADER });
+			console.log(error.message);
+		}
+	};
+};
+
+
+export const fetchPost = (id) => {
+	return async (dispatch, getState) => {
+		const {
+			AuthReducers: { token },
+		} = getState();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		dispatch({ type: SET_LOADER });
+		try {
+			const {
+				data: { post },
+			} = await axios.get(`/post/${id}`, config);
+			dispatch({ type: CLOSE_LOADER });
+			dispatch({ type: SET_POST, payload: post });
+			dispatch({ type: POST_REQUEST });
 		} catch (error) {
 			dispatch({ type: CLOSE_LOADER });
 			console.log(error.message);
