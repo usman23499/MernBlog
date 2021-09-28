@@ -15,7 +15,9 @@ const initState = {
 	createErrors: [],
 	redirect:false,
 	message:'',
-	posts:[]
+	posts:[],
+	perPage: 0,
+	count: 0,
 
 	
 };
@@ -51,7 +53,12 @@ export const FetchPost = (state = initState, action) => {
 	const { type, payload } = action;
 	
 	if (type === SET_POST) {
-		return { ...state, posts: payload };
+		return { ...state, 
+			posts: payload.response, 
+			count: payload.count,
+			perPage: payload.perPage,
+		
+		};
 	} else {
 		return state;
 	}

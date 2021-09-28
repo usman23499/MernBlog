@@ -78,10 +78,20 @@ module.exports.createPost=(req,res)=>{
 
 module.exports.fetchPost = async (req, res) => {
 	const id = req.params.id;
+    const page= req.params.page;
+    const perPage=3; // 3 items per page
+    const skip=(page-1)*perPage; // formula to skip and get new post
     // console.log(id);
 	try {
-		const response = await Post.find({ userId: id });
-		return res.status(200).json({ response:response });
+		const count = await Post.find({ userId: id }).countDocuments();
+
+		const response = await Post.find({ userId: id })
+        .skip(skip)
+        .limit(perPage)
+        .sort({updateAt:-1}); //mean deseing sort
+        
+        ;
+		return res.status(200).json({ response:response,count,perPage });
 	} catch (error) {
 		console.log(error.message);
 		return res.status(500).json({ errors: error, msg: error.message });

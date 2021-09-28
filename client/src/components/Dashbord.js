@@ -6,17 +6,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import {REDIRECT_FALSE,REMOVE_MESSAGE} from '../Store/Types/PostTypes';
 import { fetchPost } from '../Store/asyncMethods/PostMethods';
 import { BsPencil, BsArchive } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
+import { Link,useParams } from 'react-router-dom';
 import Loader from './Loader';
 import Slidebar from './Slidebar';
+import Pagination from './Pagination';
+
 const Dashbord=()=> {
     const {redirect,message,loading} = useSelector((state)=>state.PostReducers);
     const {
       user: { _id },
      
     } = useSelector((state) => state.AuthReducers);
-    const { posts } = useSelector((state) => state.FetchPost);
-    console.log(posts);
+    const { posts,count,perPage } = useSelector((state) => state.FetchPost);
+	let { page } = useParams();
+	if (page === undefined) {
+		page = 1;
+	}
+    // console.log(posts);
 
     const dispatch = useDispatch();
     useEffect(()=>{
@@ -27,8 +33,8 @@ const Dashbord=()=> {
         toast.success(message);
         dispatch({type:REMOVE_MESSAGE});
       }
-      dispatch(fetchPost(_id));
-    },[]);
+      dispatch(fetchPost(_id,page));
+    },[page]);
     return (
       <>
       		<Helmet>
@@ -76,7 +82,12 @@ const Dashbord=()=> {
 						) : (
 							<Loader />
 						)}
-						
+							<Pagination
+							path='dashbord'
+							page={page}
+							perPage={perPage}
+							count={count}
+						/>
 					</div>
 				</div>
 			</div>

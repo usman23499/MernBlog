@@ -23,7 +23,7 @@ function App() {
         
         <RouteLinks path="/registration" exact  component={Registration} />
         <RouteLinks path="/login" exact component={Login} />
-        <PrivateRoute path="/dashbord" exact component={Dashbord} />
+        <PrivateRoute path="/dashbord/:page?" exact component={Dashbord} />
         <PrivateRoute path="/create" exact component={Create} />
         <Route component={NotFound} /> 
         {/* end main is lea take jab koe route not match tu ye chale */}

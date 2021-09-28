@@ -31,9 +31,11 @@ const verifyToken=(token)=>{
 const token= localStorage.getItem('myToken');
 if(token){
     const decode=verifyToken(token);
-   initState.token=token;  
+  if(decode){
+    initState.token=token;  
     const {user} = decode; // get user data form token
     initState.user=user;
+  }
     
     // else{
     //     initState.token=token;  

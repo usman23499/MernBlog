@@ -46,7 +46,7 @@ export const createAction = (postData) => {
 	};
 };
 
-export const fetchPost = (id) => {
+export const fetchPost = (id,page) => {
 	return async (dispatch, getState) => {
 		const {
 			AuthReducers: { token },
@@ -59,11 +59,11 @@ export const fetchPost = (id) => {
 		dispatch({ type: SET_LOADER });
 		try {
 			const {
-				data: { response },
-			} = await axios.get(`/post/${id}`, config);
+				data: { response, count, perPage },
+			} = await axios.get(`/post/${id}/${page}`, config);
 			// console.log(response);
 			dispatch({ type: CLOSE_LOADER });
-			dispatch({ type: SET_POST, payload: response });
+			dispatch({ type: SET_POST, payload: {response, count, perPage } });
 			
 		} catch (error) {
 			dispatch({ type: CLOSE_LOADER });
