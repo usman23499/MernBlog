@@ -16,7 +16,9 @@ const initState={
 };
 
 const verifyToken=(token)=>{
-    const decodeToken=jwt_decode(token); // decode token and get data
+  
+    const decodeToken=jwt_decode(token);     // decode token and get data
+    // console.log(token);
     const expireIn=new Date(decodeToken.exp * 1000); // get 7d date
     if(new Date() > expireIn)// greater than mean expire hogaya
     {
@@ -24,6 +26,7 @@ const verifyToken=(token)=>{
         return null; // ye lazmi hai
     }
     else{
+        // console.log(decodeToken)
         return decodeToken;
     }
 }
@@ -56,7 +59,9 @@ const AuthReducers=(state=initState,actions)=>{
     else if(actions.type===SET_TOKEN){
 
         const decode= verifyToken(actions.payload);
+       
         const {user} = decode;
+       
         return {...state,token:actions.payload,user:user,loginErrors: [],
 			registerErrors: []}
     }

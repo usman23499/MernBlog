@@ -4,6 +4,8 @@ const connect=require("./config/db");
 
 const routers = require('./routes/userRoutes');
 const postRouters = require("./routes/postRoutes");
+const profileRouters = require("./routes/profileRoutes");
+
 require('dotenv').config();
 const app=express();
 
@@ -18,6 +20,8 @@ connect();
 app.use(bodyParser.json()); // is se hum object send and recive data
 app.use('/',routers);
 app.use('/',postRouters);
+app.use('/',profileRouters);
+
 const PORT=process.env.PORT || 5000;
 app.listen(PORT,()=>{
     console.log("Listen karlea");

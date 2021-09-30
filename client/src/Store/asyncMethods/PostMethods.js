@@ -9,6 +9,8 @@ import {
 	SET_POST,
 	SET_POSTS,
 	POST_REQUEST,
+	SET_UPDATE_ERRORS,
+	UPDATE_IMAGE_ERROR
 
 	
 } from '../Types/PostTypes';
@@ -97,6 +99,69 @@ export const fetchPost = (id) => {
 		} catch (error) {
 			dispatch({ type: CLOSE_LOADER });
 			console.log(error.message);
+		}
+	};
+};
+
+
+
+export const updateAction = (editData) => {
+	return async (dispatch, getState) => {
+		const {
+			AuthReducers: { token },
+		} = getState();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		dispatch({ type: SET_LOADER });
+		try {
+			const { data } = await axios.post('/update', editData, config);
+			dispatch({ type: CLOSE_LOADER });
+			dispatch({ type: REDIRECT_TRUE });
+			dispatch({ type: SET_MESSAGE, payload: data.msg });
+		} catch (error) {
+			const {
+				response: {
+					data: { errors }, // response ko destructure in data and data in errors
+				},
+			} = error;
+			dispatch({ type: CLOSE_LOADER });
+			dispatch({ type: SET_UPDATE_ERRORS, payload: errors });
+			console.log(error.response);
+		}
+	};
+};
+
+
+export const updateImageAction = (updateData) => {
+	return async (dispatch, getState) => {
+		const {
+			AuthReducers: { token },
+		} = getState();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		dispatch({ type: SET_LOADER });
+		try {
+			const {
+				data: { msg },
+			} = await axios.post('/updateImage', updateData, config);
+			dispatch({ type: CLOSE_LOADER });
+			dispatch({ type: REDIRECT_TRUE });
+			dispatch({ type: SET_MESSAGE, payload: msg });
+		} catch (error) {
+			const {
+				response: {
+					data: { errors },
+				},
+			} = error;
+		
+			dispatch({ type: CLOSE_LOADER });
+			dispatch({ type: UPDATE_IMAGE_ERROR, payload: errors });
 		}
 	};
 };

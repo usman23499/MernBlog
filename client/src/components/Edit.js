@@ -1,19 +1,22 @@
 import { useState, useEffect } from 'react';
 import Helmet from 'react-helmet';
-import { useParams} from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
+import toast, { Toaster } from 'react-hot-toast';
+import Loader from './Loader';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPost } from '../Store/asyncMethods/PostMethods';
+import { fetchPost, updateAction } from '../Store/asyncMethods/PostMethods';
 import {
 	POST_RESET,
-	
+	RESET_UPDATE_ERRORS
 } from '../Store/Types/PostTypes';
 
 const Edit = () => {
 	
 	const { id } = useParams();
+	const { push } = useHistory();
 	const [value, setValue] = useState('');
 	const [state, setState] = useState({
 		title: '',
@@ -22,6 +25,9 @@ const Edit = () => {
 	const dispatch = useDispatch();
 	
 	const { post, postStatus } = useSelector((state) => state.FetchPost);
+	
+	const { loading, redirect } = useSelector((state) => state.PostReducers);
+	const { editErrors } = useSelector((state) => state.UpdatePost);
 	 
 	useEffect(() => {
 		if (postStatus) {
@@ -37,19 +43,54 @@ const Edit = () => {
 	}, [post]);
 	
 
-	return  (
+
+
+	const updatePost = (e) => {
+		e.preventDefault();
+		dispatch(
+			updateAction({
+				title: state.title,
+				body: value,
+				description: state.description,
+				id: post._id,
+			})
+		);
+	};
+	useEffect(() => {
+		if (editErrors.length !== 0) {
+			editErrors.map((error) => toast.error(error.msg));
+			dispatch({ type: RESET_UPDATE_ERRORS });
+		}
+	}, [editErrors]);
+	useEffect(() => {
+		if (redirect) {
+			push('/dashbord');
+		}
+	}, [redirect]);
+
+
+	return !loading ? (
+
 		<div className='mt-100'>
 			<Helmet>
 				<title>Edit post</title>
 				<meta name='description' content='update post' />
 			</Helmet>
-			
+			<Toaster
+				position='top-right'
+				reverseOrder={false}
+				toastOptions={{
+					style: {
+						fontSize: '14px',
+					},
+				}}
+			/>
 			<div className='container'>
 				<div className='row'>
 					<div className='col-6'>
 						<div className='card'>
 							<h3 className='card__h3'>Edit post</h3>
-							<form >
+							<form onSubmit={updatePost}>
 								<div className='group'>
 									<label htmlFor='title'>Post title</label>
 									<input
@@ -108,6 +149,8 @@ const Edit = () => {
 				</div>
 			</div>
 		</div>
-    )
+    ):(
+		<Loader />
+	);
 };
 export default Edit;

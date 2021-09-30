@@ -12,6 +12,8 @@ import { Provider } from 'react-redux';
 import  Store  from './Store';
 import Create from './components/create';
 import Edit from './components/Edit';
+import EditImage from './components/EditImage';
+import UpdateName from './components/UpdateName';
 function App() {
 
   return (
@@ -26,8 +28,12 @@ function App() {
         <RouteLinks path="/login" exact component={Login} />
         <PrivateRoute path="/dashbord/:page?" exact component={Dashbord} />
         <PrivateRoute path='/edit/:id' exact component={Edit} />
+					<PrivateRoute path='/updateImage/:id' exact component={EditImage} />
 
         <PrivateRoute path="/create" exact component={Create} />
+
+        <PrivateRoute path='/updateName' exact component={UpdateName} />
+
         <Route component={NotFound} /> 
         {/* end main is lea take jab koe route not match tu ye chale */}
       </Switch>

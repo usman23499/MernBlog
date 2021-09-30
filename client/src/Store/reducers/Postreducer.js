@@ -9,7 +9,11 @@ import {
 	SET_POST,
 	SET_POSTS,
 	POST_REQUEST,
-	POST_RESET
+	POST_RESET,
+	SET_UPDATE_ERRORS,
+	RESET_UPDATE_ERRORS,
+	RESET_UPDATE_IMAGE_ERRORS,
+	UPDATE_IMAGE_ERROR
 	
 } from '../Types/PostTypes';
 
@@ -22,8 +26,10 @@ const initState = {
 	perPage: 0,
 	count: 0,
 	post:{},
-	postStatus:false
-	
+	postStatus:false,
+	editErrors:[],
+	updateImageErrors: [],
+
 };
 export const PostReducers = (state = initState, action) => {
 	const { type, payload } = action;
@@ -78,6 +84,37 @@ export const FetchPost = (state = initState, action) => {
 		return { ...state, postStatus: true };
 	} else if (type === POST_RESET) {
 		return { ...state, postStatus: false };
+	} else {
+		return state;
+	}
+};
+
+export const UpdatePost = (state = initState, action) => {
+	const { type, payload } = action;
+	if (type === SET_UPDATE_ERRORS) {
+		return { ...state, editErrors: payload };
+	} else if (type === RESET_UPDATE_ERRORS) {
+		return {
+			...state,
+			editErrors: [],
+		};
+	} else {
+		return state;
+	}
+};
+
+export const UpdateImage = (state = initState, action) => {
+	const { payload, type } = action;
+	if (type === UPDATE_IMAGE_ERROR) {
+		return {
+			...state,
+			updateImageErrors: payload,
+		};
+	} else if (type === RESET_UPDATE_IMAGE_ERRORS) {
+		return {
+			...state,
+			updateImageErrors: [],
+		};
 	} else {
 		return state;
 	}
