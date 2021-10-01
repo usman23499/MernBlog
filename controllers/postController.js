@@ -90,15 +90,18 @@ module.exports.fetchPosts = async (req, res) => {
 		const response = await Post.find({ userId: id })
         .skip(skip)
         .limit(perPage)
-        .sort({updateAt:-1}); //mean deseing sort
         
-        ;
+        .sort({createdAt:-1}); //mean deseing sort
+        
+        
 		return res.status(200).json({ response:response,count,perPage });
 	} catch (error) {
 		console.log(error.message);
 		return res.status(500).json({ errors: error, msg: error.message });
 	}
 };
+
+
 
 module.exports.fetchPost=async(req,res)=>{
     const id=req.params.id;
@@ -195,6 +198,23 @@ module.exports.deletePost = async (req, res) => {
 	try {
 		const response = await Post.findByIdAndRemove(id); // this is used for delete post
 		return res.status(200).json({ msg: 'Your post has been deleted' });
+	} catch (error) {
+		return res.status(500).json({ errors: error, msg: error.message });
+	}
+};
+
+// home
+module.exports.home = async (req, res) => {
+	const page = req.params.page;
+	const perPage = 6;
+	const skip = (page - 1) * perPage;
+	try {
+		const count = await Post.find({}).countDocuments(); // count all document
+		const posts = await Post.find({})
+			.skip(skip)
+			.limit(perPage)
+			.sort({ createdAt: -1 });
+		return res.status(200).json({ response: posts, count, perPage });
 	} catch (error) {
 		return res.status(500).json({ errors: error, msg: error.message });
 	}

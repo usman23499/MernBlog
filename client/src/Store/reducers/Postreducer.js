@@ -23,7 +23,7 @@ const initState = {
 	redirect:false,
 	message:'',
 	posts:[],
-	perPage: 0,
+	perPage: 3,
 	count: 0,
 	post:{},
 	postStatus:false,

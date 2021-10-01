@@ -24,7 +24,7 @@ const Dashbord=()=> {
 	if (page === undefined) {
 		page = 1;
 	}
-    // console.log(posts);
+    console.log(posts);
 
     const dispatch = useDispatch();
 	
@@ -116,6 +116,7 @@ const Dashbord=()=> {
 						) : (
 							<Loader />
 						)}
+						
 							<Pagination
 							path='dashbord'
 							page={page}
