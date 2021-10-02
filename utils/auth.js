@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 module.exports=(req,res,next)=>{
     const authHeaders=req.headers.authorization;
     //console.log(req.headers); //ye hedaer jo post methods main hader se token ja raha tha we can acess
@@ -6,7 +7,7 @@ module.exports=(req,res,next)=>{
     var token=authHeaders.split('Bearer ')[1]; // ye split se 1 index pe toekn mele ga chaek console
     try {
         // console.log(token);
-        jwt.verify(token,'mystrongjwt'); // ye form .env file
+        jwt.verify(token,process.env.SECRET); // ye form .env file
         next(); // when token verify tu aage jae 
     } catch (error) {
 		return res.status(401).json({ errors: [{ msg: error.message }] });
