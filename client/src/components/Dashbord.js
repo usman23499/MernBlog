@@ -57,11 +57,12 @@ const Dashbord=()=> {
         toast.success(message);
         dispatch({type:REMOVE_MESSAGE});
       }
-    
+     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[message]);
 
 	useEffect(() => {
 		dispatch(fetchPosts(_id, page));
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page]);
     return (
       <>

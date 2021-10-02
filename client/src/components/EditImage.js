@@ -48,11 +48,13 @@ const EditImage = () => {
 			updateImageErrors.map((error) => toast.error(error.msg));
 			dispatch({ type: RESET_UPDATE_IMAGE_ERRORS });
 		}
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [updateImageErrors]);
 	useEffect(() => {
 		if (redirect) {
 			push('/dashbord');
 		}
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [redirect]);
 
 	return (
@@ -89,7 +91,7 @@ const EditImage = () => {
 							</div>
 							<div className='group'>
 								<div className='imagePreivew'>
-									{state.imagePreview ? <img src={state.imagePreview} /> : ''}
+									{state.imagePreview ? <img src={state.imagePreview} alt="img" /> : ''}
 								</div>
 							</div>
 							<div className='group'>

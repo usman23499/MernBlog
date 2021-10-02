@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+
 import { useHistory } from 'react-router-dom';
 const Sidebar = () => {
 	const { push } = useHistory();

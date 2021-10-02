@@ -17,6 +17,7 @@ const Home = () => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(homePosts(page));
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page]);
 
 	return (

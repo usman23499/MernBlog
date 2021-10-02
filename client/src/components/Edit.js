@@ -40,6 +40,7 @@ const Edit = () => {
 		} else {
 			dispatch(fetchPost(id));
 		}
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [post]);
 	
 
@@ -61,11 +62,13 @@ const Edit = () => {
 			editErrors.map((error) => toast.error(error.msg));
 			dispatch({ type: RESET_UPDATE_ERRORS });
 		}
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [editErrors]);
 	useEffect(() => {
 		if (redirect) {
 			push('/dashbord');
 		}
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [redirect]);
 
 

@@ -80,6 +80,7 @@ const Create = (props) => {
 		if (createErrors.length !== 0) {
 			createErrors.map((err) => toast.error(err.msg));
 		}
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [createErrors, redirect]);
 
 	return (
@@ -182,7 +183,7 @@ const Create = (props) => {
 									</div>
 									<div className='group'>
 										<div className='imagePreivew'>
-											{imagePreview ? <img src={imagePreview} /> : ''}
+											{imagePreview ? <img src={imagePreview} alt='Img' /> : ''}
 										</div>
 									</div>
 
