@@ -50,7 +50,7 @@ module.exports.createPost=(req,res)=>{
 			return res.status(400).json({errors,files});
 		}
         else{
-            const newPath = __dirname + `/../client/public/images/${files.image.name}`;
+            const newPath = __dirname + `/../client/build/images/${files.image.name}`;
                     // path where you want to save image
                     fs.copyFile(files.image.path,newPath, async (error)=>{
                         if(!error){
@@ -176,7 +176,7 @@ module.exports.updateImage = (req, res) => {
 		if (imageErrors.length !== 0) {
 			return res.status(400).json({ errors: imageErrors });
 		} else {
-			const newPath = __dirname + `/../client/public/images/${files.image.name}`;
+			const newPath = __dirname + `/../client/build/images/${files.image.name}`;
 			fs.copyFile(files.image.path, newPath, async (error) => {
 				if (!error) {
 					try {

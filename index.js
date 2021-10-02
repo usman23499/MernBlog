@@ -23,6 +23,14 @@ app.use('/',postRouters);
 app.use('/',profileRouters);
 
 const PORT=process.env.PORT || 5000;
+
+if ('production' === 'production') {
+	app.use(express.static(path.join(__dirname, '/client/build/')));
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+        // is se we can access recat routes
+	});
+}
 app.listen(PORT,()=>{
     console.log("Listen karlea");
 
