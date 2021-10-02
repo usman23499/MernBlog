@@ -41,6 +41,8 @@ const ChangePassword = () => {
 	useEffect(() => {
 		if (redirect) {
 			push('/dashbord');
+
+			
 		}
 	}, [redirect]);
 	return !loading ? (
