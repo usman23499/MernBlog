@@ -1,7 +1,7 @@
 const express=require('express');
 const bodyParser = require('body-parser') // for make middle ware
 const connect=require("./config/db");
-
+const path = require('path');
 const routers = require('./routes/userRoutes');
 const postRouters = require("./routes/postRoutes");
 const profileRouters = require("./routes/profileRoutes");
