@@ -13,7 +13,9 @@ import {
 	SET_UPDATE_ERRORS,
 	RESET_UPDATE_ERRORS,
 	RESET_UPDATE_IMAGE_ERRORS,
-	UPDATE_IMAGE_ERROR
+	UPDATE_IMAGE_ERROR,
+	SET_DETAILS,
+	COMMENTS
 	
 } from '../Types/PostTypes';
 
@@ -29,7 +31,8 @@ const initState = {
 	postStatus:false,
 	editErrors:[],
 	updateImageErrors: [],
-
+	details:{},
+	comments: [],
 };
 export const PostReducers = (state = initState, action) => {
 	const { type, payload } = action;
@@ -52,8 +55,16 @@ export const PostReducers = (state = initState, action) => {
 		return {...state , message:''};
 		// message remove after display
 	}
-
-
+	
+	else if (type === SET_DETAILS) {
+		return { ...state, details: payload };  // SET DETAIL HERE NOT MAKE NEW FUNCTION
+	}
+	else if (type === COMMENTS) {  // set comments
+		return {
+			...state,
+			comments: payload,
+		};
+	}
 	 else {
 		return state;
 	}

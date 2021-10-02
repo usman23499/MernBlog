@@ -15,6 +15,7 @@ import Edit from './components/Edit';
 import EditImage from './components/EditImage';
 import UpdateName from './components/UpdateName';
 import ChangePassword from './components/ChangePassword';
+import Details from './components/Details';
 function App() {
 
   return (
@@ -26,6 +27,8 @@ function App() {
         {/* sab home ko acess karsaket hain not login and login wale */}
 				<Route path='/home/:page' exact component={Home} />
         {/* ye us ke lae when paginagtion in home 2 ect like ek page pe sarif 6 post dipaly hai */}
+					<Route path='/details/:id' exact component={Details} />
+
         <RouteLinks path="/registration" exact  component={Registration} />
         <RouteLinks path="/login" exact component={Login} />
         <PrivateRoute path="/dashbord/:page?" exact component={Dashbord} />

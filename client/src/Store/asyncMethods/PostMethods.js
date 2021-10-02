@@ -10,8 +10,9 @@ import {
 	SET_POSTS,
 	POST_REQUEST,
 	SET_UPDATE_ERRORS,
-	UPDATE_IMAGE_ERROR
-
+	UPDATE_IMAGE_ERROR,
+	SET_DETAILS,
+	COMMENTS
 	
 } from '../Types/PostTypes';
 // const token = localStorage.getItem("myToken");
@@ -177,6 +178,47 @@ export const homePosts = (page) => {
 			} = await axios.get(`/home/${page}`);
 			dispatch({ type: CLOSE_LOADER });
 			dispatch({ type: SET_POSTS, payload: { response, count, perPage } });
+		} catch (error) {
+			dispatch({ type: CLOSE_LOADER });
+			console.log(error);
+		}
+	};
+};
+
+
+export const postDetails = (id) => {
+	return async (dispatch) => {
+		dispatch({ type: SET_LOADER });
+		try {
+			const {
+				data: { post,comments },
+			} = await axios.get(`/explore/${id}`); // here id mean slug
+			dispatch({ type: CLOSE_LOADER });
+			dispatch({ type: SET_DETAILS, payload: post });
+			dispatch({ type: COMMENTS, payload: comments }); // set commet
+		} catch (error) {
+			dispatch({ type: CLOSE_LOADER });
+			console.log(error);
+		}
+	};
+};
+
+
+export const postComment = (commentData) => {
+	return async (dispatch, getState) => {
+		const {
+			AuthReducers: { token },
+		} = getState();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		dispatch({ type: SET_LOADER });
+		try {
+			const { data } = await axios.post('/comment', commentData, config);
+			dispatch({ type: CLOSE_LOADER });
+			console.log(data);
 		} catch (error) {
 			dispatch({ type: CLOSE_LOADER });
 			console.log(error);

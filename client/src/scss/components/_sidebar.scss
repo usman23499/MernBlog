@@ -3,6 +3,7 @@
         border-top: 1px solid $silverLight!important;
         border-top-left-radius: .6rem;
         border-top-right-radius: .6rem;
+        cursor:default !important ;
     }
     &__element:last-child {
         border-bottom-left-radius: .6rem;
@@ -14,7 +15,7 @@
         border: 1px solid $silverLight;
         border-top: none;
         cursor: pointer;
-        a {
+        span {
             color: $black;
             font-size: 1.4rem;
         }
@@ -25,11 +26,15 @@
         &:hover {
             background: $green;
         }
-        &:hover a {
+        &:hover span {
             color: $white;
+            background: $green;
         }
-        &:hover h3 {
-            color: $white;
+        &:first-child:hover{
+            background:white !important;
         }
+        // &:hover h3 {
+        //     color: $white;
+        // }
     }
 }

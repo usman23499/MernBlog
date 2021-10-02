@@ -34,6 +34,8 @@ const Home = () => {
 						{!loading ? (
 							posts.length > 0 ? (
 								posts.map((post) => (
+									<>
+										<Link to={`/details/${post.slug}`}>
 									<div className='row post-style' key={post._id}>
 										<div className='col-8'>
 											<div className='post'>
@@ -50,9 +52,9 @@ const Home = () => {
 												</div>
 												<div className='post__body'>
 													<h1 className='post__body__title'>
-														<Link to={`/details/${post.slug}`}>
+													
 															{post.title}
-														</Link>
+														
 													</h1>
 													<div className='post__body__details'>
 														{htmlToFormattedText(post.body.slice(0, 300))}
@@ -66,6 +68,8 @@ const Home = () => {
 											</div>
 										</div>
 									</div>
+									</Link>
+									</>
 								))
 							) : (
 								'No posts'
