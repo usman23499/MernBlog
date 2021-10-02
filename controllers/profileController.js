@@ -2,7 +2,7 @@ const User = require('../models/User'); // call user schema
 const jwt=require('jsonwebtoken'); // for create new token when name is updated
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
-require('dotenv').config();
+
 module.exports.updateName = async (req, res) => {
     const {name,id}=req.body;
     if(name===""){
@@ -16,7 +16,7 @@ module.exports.updateName = async (req, res) => {
                 {new:true} // this is used to call updated user
             );
             console.log(user);
-            const token = jwt.sign({ user },process.env.SECRET, 
+            const token = jwt.sign({ user },"mystrongjwt", 
             {
 				expiresIn:'7d',
 			}

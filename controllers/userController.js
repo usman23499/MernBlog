@@ -14,7 +14,7 @@ require('dotenv').config();
 
 
 const createToken=(user)=>{
-   return jwt.sign({user},process.env.SECRET,
+   return jwt.sign({user},"mystrongjwt",
        {
            expiresIn:'7d'
        }
