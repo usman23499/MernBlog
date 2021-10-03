@@ -48,13 +48,13 @@ const EditImage = () => {
 			updateImageErrors.map((error) => toast.error(error.msg));
 			dispatch({ type: RESET_UPDATE_IMAGE_ERRORS });
 		}
-		 // eslint-disable-next-line react-hooks/exhaustive-deps
+		
 	}, [updateImageErrors]);
 	useEffect(() => {
 		if (redirect) {
 			push('/dashbord');
 		}
-		 // eslint-disable-next-line react-hooks/exhaustive-deps
+		
 	}, [redirect]);
 
 	return (

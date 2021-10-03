@@ -30,7 +30,7 @@ const UpdateName = () => {
 
 	useEffect(() => {
 		setUserName(name);
-		 // eslint-disable-next-line react-hooks/exhaustive-deps
+		 
 	}, []);
 	
 	useEffect(() => {
@@ -38,13 +38,13 @@ const UpdateName = () => {
 			updateErrors.map((error) => toast.error(error.msg));
 			dispatch({ type: RESET_PROFILE_ERRORS });
 		}
-		 // eslint-disable-next-line react-hooks/exhaustive-deps
+		 
 	}, [updateErrors]);
 	useEffect(() => {
 		if (redirect) {
 			push('/dashbord');
 		}
-		 // eslint-disable-next-line react-hooks/exhaustive-deps
+		 
 	}, [redirect]);
 	return (
 		<div className='container mt-100'>

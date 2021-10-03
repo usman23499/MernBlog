@@ -80,7 +80,7 @@ const Create = (props) => {
 		if (createErrors.length !== 0) {
 			createErrors.map((err) => toast.error(err.msg));
 		}
-		 // eslint-disable-next-line react-hooks/exhaustive-deps
+		
 	}, [createErrors, redirect]);
 
 	return (

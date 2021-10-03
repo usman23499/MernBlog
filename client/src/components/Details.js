@@ -26,7 +26,6 @@ const Details = () => {
 	};
 	useEffect(() => {
 		dispatch(postDetails(id));
-		 // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id]);
 	return (
 		<div className='container'>
