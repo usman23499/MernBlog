@@ -14,7 +14,7 @@
     "build": "npm run build --prefix client",
     "dev": "concurrently \" npm run server \" \" npm run client \"",
     "heroku-postbuild": "npm run clientInstall && npm run build",
-    "start": "node index.js"
+    "start": "node ./index.js"
   },
   "keywords": [],
   "author": "",
