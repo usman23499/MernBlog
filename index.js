@@ -22,7 +22,7 @@ app.use('/',routers);
 app.use('/',postRouters);
 app.use('/',profileRouters);
 
-const PORT= 5000;
+const PORT= process.env.PORT || 8080;
 
 if ('production' === 'production') {
 	app.use(express.static(path.join(__dirname, '/client/build/')));
